@@ -1,4 +1,5 @@
-/*Define a promise with the new Promise constructor
+/*
+  Promise definition using the new Promise constructor
 	The constructor takes one argument, the Executor Function.
 	Executor Function has two parameters: resolve and reject. These are used to modify the state of the promise.
 */
