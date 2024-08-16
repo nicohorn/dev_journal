@@ -17,9 +17,9 @@ const promise_example = new Promise((resolve, reject) => {
 
 /*
 
-  then method runs if the promise is resolved (fulfilled state)
-  catch method runs if the promise is rejected (rejected state)
-  finally method runs regardless of the state
+  .then method runs if the promise is resolved (fulfilled state)
+  .catch method runs if the promise is rejected (rejected state)
+  .finally method runs regardless of the state
 
 */
 
