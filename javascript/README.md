@@ -1,24 +1,10 @@
-# Javascript Promises
+# JavaScript
 
-A promise is a JavaScript object that represents the eventual completion of an asynchronous operation.
+### Characteristics of JavaScript
 
-Promises have 3 states
-
-- **Pending**: promises are initialized with this state.
-- **Fulfilled**: when the promise was successfully resolved, it takes this state.
-- **Rejected**: when the promise is rejected.
+- `Multi-Paradigm`: supports object-oriented, declarative (functional) and imperative programming styles.
+- `Prototype-based`: classes are not explicitly defined, they're derived by adding properties and methods to an instance of another class or adding them to an empty object.
+- `Dynamic typing`: the interpreter assigns variable a type based on the variable's value an runtime.
+- `First-class functions`: this means that functions can be treated as variables, they (functions) can be assigned to variables or passed as arguments to other functions.
 
 ---
-
-##### Creating a Promise
-
-A promise can be created using the **new Promise()** constructor. This constructor takes only one argument, the _Executor Function_, which has two parameters: _resolve_ and _reject_
-These methods, resolve and reject, are used to change the status of the promise.
-
-There are 3 methods, among others, that can be called from a promise:
-
-- .then() -> runs when the promise is fulfilled
-- .catch() -> runs when the promise is rejected
-- .finally() -> runs regardless of the promise state.
-
-then and catch receive one argument, which is the object or primitive returned by the resolve or reject methods.

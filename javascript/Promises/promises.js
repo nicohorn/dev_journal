@@ -33,3 +33,11 @@ promise_example
   .finally(() => {
     console.log("End of promise");
   });
+
+const aThenable = {
+  then: function (resolve, reject) {
+    resolve("something");
+  },
+};
+
+Promise.resolve(aThenable).then((result) => console.log(result));
