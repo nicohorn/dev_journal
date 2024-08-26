@@ -1,5 +1,7 @@
 # JavaScript
 
+This document contains rather unorganized information about JavaScript. Once I get enough content on one topic, I'll separate that into a folder that contains examples and a dedicated README.md file to keep things clear and organized.
+
 ### Characteristics of JavaScript
 
 - `Multi-Paradigm`: supports object-oriented, declarative (functional) and imperative programming styles.
