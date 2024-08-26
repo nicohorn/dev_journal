@@ -21,3 +21,11 @@ How JavaScript handles the execution of code:
 ### Execution Context
 
 JavaScript runs on a single thread, which makes it synchronous at its core. Any functions that are gonna be executed are placed into del **call stack** which is a data structure that implements the **LIFO** method.
+
+### Static methods
+
+A static method is a method that it's called upong a class itself, not an instance. They don't have access to the "this" object. Examples: Promise.all(params), Math.rand(), etc. They usually provide functionality associated with the class.
+
+### Instance methods
+
+An instance method is a method that belongs to a specific instance of a class. They have access to the "this" object and they are usually meant to transform the values of the instance properties.

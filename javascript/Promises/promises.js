@@ -40,4 +40,4 @@ const aThenable = {
   },
 };
 
-Promise.resolve(aThenable).then((result) => console.log(result));
+Promise.resolve(aThenable).then((result) => console.log(result)); //Will log "something"
