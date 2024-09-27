@@ -17,8 +17,7 @@ How JavaScript handles the execution of code:
 
 1. `Loading the script`
 2. `Parsing the code`: the parses reads through the source code, checks for syntax errors and finally, converts the source code into the AST (Abstract Sytanx Tree).
-3. `Compilation`: the AST is converted into **bytecode** or **machine code**, modern engines use JIT compilation for performance optimization.
-4.
+3. `Compilation/Interpretation`: the AST is converted into **bytecode** or **machine code**, modern engines use JIT compilation for performance optimization.
 
 ### Execution Context
 

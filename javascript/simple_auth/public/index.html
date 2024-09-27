@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JWT with HTTP-only Refresh Token Cookie Demo</title>
+</head>
+
+<body>
+    <h1>Auth in vanilla JavaScript</h1>
+    <h3>JWT with HTTP-only Refresh Token Cookie Demo</h3>
+    <form style="
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin: 1rem 0;
+        width: fit-content;
+      ">
+        <input id="#username_input" type="text" placeholder="User" />
+        <input id="#password_input" placeholder="Password" type="password" />
+    </form>
+    <button id="loginBtn">Login</button>
+    <button id="accessProtectedBtn">Access Protected Data</button>
+    <button id="refreshBtn">Refresh Token</button>
+    <button id="logoutBtn">Logout</button>
+    <div id="output"></div>
+
+    <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
+        <div>
+            <p style="margin: 0;">
+                <b>Login:</b> Logs you in using the hardcoded user. <br />
+                The hardcoded credentials are: <br />username: nicohorn <br />
+                password: 12345
+            </p>
+        </div>
+        <div>
+            <b>Access Protected Data:</b> Makes a GET request to the /protected route
+            which is only accessible if the client sends a request with the
+            authorization header set, containing a valid JWT (access token) as the
+            Bearer.
+        </div>
+        <div>
+            <b>Refresh token:</b> Makes a POST request to the /token endpoint. As the refresh token is an HTTP only
+            cookie,
+            the server will receive it along with the request body (in this case, nothing). This endpoint will run a
+            function to refresh the access token, verifying first the validity of the refresh token.
+        </div>
+        <div>
+            <b>Logout:</b> Logs you out of the app by removing the refresh token and the access token.
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>
