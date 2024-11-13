@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Schema Manager and Form Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+        }
+
+        #schemaList {
+            width: 200px;
+            margin-right: 20px;
+        }
+
+        #mainContent {
+            flex-grow: 1;
+        }
+
+        #editor,
+        #formPreview {
+            margin-top: 20px;
+        }
+
+        .draggable {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            cursor: move;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="schemaList">
+        <h2>Schemas</h2>
+        <ul id="schemaListItems"></ul>
+        <button onclick="createNewSchema()">Create New Schema</button>
+    </div>
+    <div id="mainContent">
+        <div id="editor"></div>
+        <div id="formPreview">
+            <h2>Form Preview</h2>
+            <div id="form"></div>
+        </div>
+        <div id="layoutEditor">
+            <h2>Layout Editor</h2>
+            <div id="draggableItems"></div>
+        </div>
+        <button onclick="saveCurrentSchema()">Save Schema</button>
+    </div>
+
+    <script>
+        let schemas = JSON.parse(localStorage.getItem('schemas')) || {};
+        let currentSchemaName = '';
+        let editor;
+
+        function initEditor(schema) {
+            if (editor) {
+                editor.destroy();
+            }
+            editor = new JSONEditor(document.getElementById('editor'), {
+                schema: {
+                    type: "object",
+                    properties: {
+                        schema: {
+                            type: "object",
+                            properties: schema
+                        }
+                    }
+                }
+            });
+            editor.on('change', () => {
+                updateFormPreview(editor.getValue().schema);
+                updateLayoutEditor(editor.getValue().schema);
+            });
+        }
+
+        function updateSchemaList() {
+            const list = document.getElementById('schemaListItems');
+            list.innerHTML = '';
+            Object.keys(schemas).forEach(name => {
+                const li = document.createElement('li');
+                li.textContent = name;
+                li.onclick = () => loadSchema(name);
+                list.appendChild(li);
+            });
+        }
+
+        function loadSchema(name) {
+            currentSchemaName = name;
+            initEditor(schemas[name]);
+            updateFormPreview(schemas[name]);
+            updateLayoutEditor(schemas[name]);
+        }
+
+        function createNewSchema() {
+            const name = prompt("Enter a name for the new schema:");
+            if (name) {
+                schemas[name] = { type: "object", properties: {} };
+                updateSchemaList();
+                loadSchema(name);
+            }
+        }
+
+        function saveCurrentSchema() {
+            if (currentSchemaName) {
+                schemas[currentSchemaName] = editor.getValue().schema;
+                localStorage.setItem('schemas', JSON.stringify(schemas));
+                alert("Schema saved successfully!");
+            } else {
+                alert("Please create or select a schema first.");
+            }
+        }
+
+        function updateFormPreview(schema) {
+            const formContainer = document.getElementById('form');
+            formContainer.innerHTML = '';
+            new JSONEditor(formContainer, {
+                schema: schema,
+                disable_edit_json: true,
+                disable_properties: true,
+                disable_collapse: true
+            });
+        }
+
+        function updateLayoutEditor(schema) {
+            const container = document.getElementById('draggableItems');
+            container.innerHTML = '';
+            Object.keys(schema.properties).forEach(key => {
+                const div = document.createElement('div');
+                div.className = 'draggable';
+                div.textContent = key;
+                div.dataset.key = key;
+                container.appendChild(div);
+            });
+            new Sortable(container, {
+                animation: 150,
+                ghostClass: 'blue-background-class',
+                onEnd: function (evt) {
+                    const newOrder = Array.from(container.children).map(el => el.dataset.key);
+                    reorderSchemaProperties(newOrder);
+                }
+            });
+        }
+
+        function reorderSchemaProperties(newOrder) {
+            const currentSchema = editor.getValue().schema;
+            const newProperties = {};
+            newOrder.forEach(key => {
+                newProperties[key] = currentSchema.properties[key];
+            });
+            currentSchema.properties = newProperties;
+            editor.setValue({ schema: currentSchema });
+        }
+
+        updateSchemaList();
+    </script>
+</body>
+
+</html>
